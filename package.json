@@ -1,0 +1,16 @@
+{
+	"name": "node-fos-request",
+	"description": "makes request a little smarter",
+	"homepage": "http://futurios.org",
+	"author": {
+		"name": "Sergey Antoninko",
+		"email": "lyxsus@gmail.com"
+	},
+	"version": "0.1.0",
+	"main": "index.js",
+	"dependencies": {
+		"request": "2.x.x",
+		"q": "0.8.x"
+	},
+	"private": true
+}

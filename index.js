@@ -27,7 +27,14 @@ module.exports = function (options) {
 			}
 
 			if (contentType == 'application/json' || contentType == 'text/json') {
-				return JSON.parse (response.body);
+				var body = JSON.parse (response.body);
+
+				if (body.error) {
+					throw body;
+				} else {
+					return body;
+				}
+				
 			} else {
 				return response.body;
 			}

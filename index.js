@@ -3,14 +3,27 @@ var request = require ('request'),
 
 function promiseRequest (options) {
 	var deferred = Q.defer ();
-
-	request (options, function (error, response) {
+	
+	var callback = function (error, response) {
 		if (error) {
 			deferred.reject (error);
 		} else {
 			deferred.resolve (response);
 		}
-	});
+	};
+
+
+	if (options.body && options.body.pipe) {
+		var stream = options.body;
+		
+		delete options ['body'];
+		
+		stream.pipe (
+			request (options, callback)
+		);
+	} else {
+		request (options, callback);
+	}
 
 	return deferred.promise;
 }
@@ -18,6 +31,8 @@ function promiseRequest (options) {
 module.exports = function (options) {
 	return promiseRequest (options)
 		.then (function (response) {
+			if (options.returnResponse) return response;
+
 			var contentType;
 
 			if (response.headers ['content-type'] && !options.accept) {
@@ -39,4 +54,4 @@ module.exports = function (options) {
 				return response.body;
 			}
 		});
-}
+};

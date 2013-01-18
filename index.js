@@ -1,4 +1,5 @@
 var request = require ('request'),
+	URL = require ('url'),
 	Q = require ('q');
 
 function promiseRequest (options) {
@@ -11,6 +12,14 @@ function promiseRequest (options) {
 			deferred.resolve (response);
 		}
 	};
+
+	if (options.auth) {
+		var parsedUrl = URL.parse (options.url);
+		parsedUrl.auth = options.auth.username + ':' + options.auth.password;
+		
+		options.url = URL.format (parsedUrl);
+		delete options.auth;
+	}
 
 
 	if (options.body && options.body.pipe) {

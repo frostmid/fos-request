@@ -31,14 +31,23 @@ function promiseRequest (options) {
 			request (options, callback)
 		);
 	} else {
-		request (options, callback);
+		if (options.returnRequest) {
+			return request (options);
+		} else {
+			request (options, callback);
+		}
 	}
 
 	return deferred.promise;
 }
 
 module.exports = function (options) {
-	return promiseRequest (options)
+	var request = promiseRequest (options);
+
+	if (options.returnRequest) {
+		return request;
+	}
+	return request
 		.then (function (response) {
 			if (options.returnResponse) return response;
 

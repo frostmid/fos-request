@@ -60,14 +60,19 @@ module.exports = function (options) {
 			}
 
 			if (contentType == 'application/json' || contentType == 'text/json') {
-				var body = JSON.parse (response.body);
+				var body;
+				try {
+					body = JSON.parse (response.body);
+				} catch (e) {
+					console.error ('Failed to parse http response body', e.message, options, response.body);
+					throw e;
+				}
 
 				if (body.error) {
 					throw body;
 				} else {
 					return body;
 				}
-				
 			} else {
 				return response.body;
 			}

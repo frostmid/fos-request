@@ -2,6 +2,8 @@ var request = require ('request'),
 	URL = require ('url'),
 	Q = require ('q');
 
+Q.longStackJumpLimit = 0;
+
 function promiseRequest (options) {
 	var deferred = Q.defer ();
 	
@@ -20,6 +22,8 @@ function promiseRequest (options) {
 		options.url = URL.format (parsedUrl);
 		delete options.auth;
 	}
+
+	options.timeout = 5000;
 
 
 	if (options.body && options.body.pipe) {

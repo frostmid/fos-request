@@ -23,8 +23,11 @@ function promiseRequest (options) {
 		delete options.auth;
 	}
 
-	options.timeout = 5000;
+	options.timeout = 60 * 1000;
 
+	if (!options.method) {
+		options.method = 'get';
+	}
 
 	if (options.body && options.body.pipe) {
 		var stream = options.body;

@@ -10,7 +10,7 @@
 	"main": "index.js",
 	"dependencies": {
 		"request": "2.x.x",
-		"q": "0.8.x"
+		"vow": "0.8.x"
 	},
 	"private": true
 }

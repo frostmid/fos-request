@@ -1,17 +1,17 @@
 var request = require ('request'),
 	URL = require ('url'),
-	Q = require ('q');
+	Promises = require ('vow');
 
-Q.longStackJumpLimit = 0;
+// Q.longStackJumpLimit = 0;
 
 function promiseRequest (options) {
-	var deferred = Q.defer ();
+	var deferred = Promises.promise ();
 	
 	var callback = function (error, response) {
 		if (error) {
 			deferred.reject (error);
 		} else {
-			deferred.resolve (response);
+			deferred.fulfill (response);
 		}
 	};
 
@@ -45,7 +45,7 @@ function promiseRequest (options) {
 		}
 	}
 
-	return deferred.promise;
+	return deferred;
 }
 
 module.exports = function (options) {

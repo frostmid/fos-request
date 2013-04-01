@@ -29,6 +29,14 @@ function promiseRequest (options) {
 		options.method = 'get';
 	}
 
+	if (options.sessionId && (options.method == 'PUT' || options.method == 'POST')) {
+		if (options.url.indexOf ('?') == -1) {
+			options.url += '?sessid=' + options.sessionId;
+		} else {
+			options.url += '&sessid=' + options.sessionId;
+		}
+	}
+
 	if (options.body && options.body.pipe) {
 		var stream = options.body;
 		

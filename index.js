@@ -39,12 +39,16 @@ function promiseRequest (options) {
 
 	if (options.body && options.body.pipe) {
 		var stream = options.body;
-		
-		delete options ['body'];
-		
+
+		delete options.body;
+
+		stream.pause ();
+
 		stream.pipe (
 			request (options, callback)
 		);
+
+		stream.resume ();
 	} else {
 		if (options.returnRequest) {
 			return request (options);

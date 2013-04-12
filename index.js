@@ -78,7 +78,7 @@ module.exports = function (options) {
 				contentType = options.accept || 'application/json';
 			}
 
-			if (contentType == 'application/json' || contentType == 'text/json') {
+			if (response.body && (contentType == 'application/json' || contentType == 'text/json')) {
 				var body;
 				try {
 					body = JSON.parse (response.body);

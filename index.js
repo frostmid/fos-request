@@ -29,6 +29,14 @@ function promiseRequest (options) {
 		options.method = 'get';
 	}
 
+	if (!options.headers) {
+		options.headers = {};
+	}
+
+	if (!options.headers ['accept-encoding']) {
+		options.headers ['accept-encoding'] = 'gzip, deflate';
+	}
+
 	if (options.sessionId && (options.method == 'PUT' || options.method == 'POST')) {
 		if (options.url.indexOf ('?') == -1) {
 			options.url += '?sessid=' + options.sessionId;
